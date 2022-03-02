@@ -8,12 +8,12 @@ pipeline {
           }
           stage('Build Image') {
                steps {
-               sh "docker build -t 19841022/flask ."
+               sh "docker build -t bndah/mywelcomepage ."
                }
          }
          stage('Push image') {
                steps {
-               sh 'docker push 19841022/flask'
+               sh 'docker push bndah/mywelcomepage'
                }
          }
          stage('Copy the files') {
