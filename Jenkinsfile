@@ -1,29 +1,19 @@
 pipeline {
       agent any
-      environment{
-      DOCKERHUB_CREDENTIALS = credentials('bndah')
-    }
-      
-      
-         stages {
+          stages {
                stage('Clone Repository') {
                steps {
                checkout scm
                }
-         }
-         stage('Build Image') {
+          }
+          stage('Build Image') {
                steps {
-               sh "docker build -t bndah/mywelcomepage ."
+               sh "docker build -t  bndah/mywelcomepage ."
                }
-         }
-         stage('login to DockerHub'){
-                steps{
-                      sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                }
          }
          stage('Push image') {
                steps {
-               sh 'docker push bndah/mywelcomepage'
+               sh 'docker push  bndah/mywelcomepage'
                }
          }
          stage('Copy the files') {
