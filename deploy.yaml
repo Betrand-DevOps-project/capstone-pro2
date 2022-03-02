@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: falsk
+  labels: 
+    app: flask
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: flask
+  template:
+    metadata:
+      labels:
+        app: flask
+    spec:
+      containers:
+      - name: flask
+        image: 19841022/flask
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5000
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask
+spec:
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 4000
+      targetPort: 5000
+      nodePort: 32000
+  selector:
+    app: flask
