@@ -6,7 +6,7 @@ provider "aws" {
 
 variable "ec2-instance" {
   type    = "string"
-  default = "i-081c7e6e454cbcdde"
+  default = "i-0f9fe956a8a1d5529"
 }
 
 resource "aws_cloudwatch_dashboard" "starter-dashboard {
