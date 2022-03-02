@@ -1,8 +1,8 @@
 pipeline {
       agent any
       enviroment{
-          DOCKERHUB_CREDENTIALS = credentials('bndah')
-      }
+      DOCKERHUB_CREDENTIALS = credentials('bndah')
+    }
          stages {
                stage('Clone Repository') {
                steps {
