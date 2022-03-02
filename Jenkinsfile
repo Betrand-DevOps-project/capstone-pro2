@@ -1,8 +1,9 @@
 pipeline {
       agent any
       environment{
-      DOCKERHUB_CREDENTIALS = credentials('bndah-DockerHub')
-    { 
+      DOCKERHUB_CREDENTIALS = credentials('DockerHub')
+    }
+
           stages {
                stage('Clone Repository') {
                steps {
@@ -14,7 +15,7 @@ pipeline {
                sh "docker build -t  bndah/mywelcomepage ."
                }
          }
-         stage('Login to DockerHub'){
+          stage('Login to DockerHub'){
                steps{
                      sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                }
@@ -24,35 +25,18 @@ pipeline {
                sh 'docker push  bndah/mywelcomepage'
                }
          }
-         stage('Copy the files') {
+         stage('copy deployment file') {
                steps {
-               sh "scp -o StrictHostKeyChecking=no deploy.yaml ubuntu@3.83.45.0:/home/ubuntu"
-               sh "scp -o StrictHostKeyChecking=no ansi.yml ubuntu@3.83.45.0:/home/ubuntu"
-               }
-         }       
-         stage('Create deployment and Service') {
-               steps {
-               sh 'ansible -m ping all'
-               sh 'ansible-playbook ansi.yml'
+               sh "scp -o StrictHostKeyChecking=no Deployment.yml ubuntu@3.83.45.0:/home/ubuntu"
+               sh "scp -o StrictHostKeyChecking=no Ansible.yml ubuntu@3.83.45.0:/home/ubuntu"
                }
          }
-         stage('expose my app') {
+         stage('Deploy k8') {
                steps {
-               sh 'ssh ubuntu@3.83.45.0 minikube service flask'
+                     
+               sh 'ansible-playbook ans.yml'
                }
          }
-         stage('Terraform Init'){
-             steps{
-                 sh 'terraform init'
-             }
-         }
-         stage ("terraform Action") {
-             steps {
-                echo "Terraform action is --> ${action}"
-                sh ('terraform ${action} --auto-approve') 
-             }
-         }
-
          stage('Testing') {
               steps {
                     echo 'Testing...'
