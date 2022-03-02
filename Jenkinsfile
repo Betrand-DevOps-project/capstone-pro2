@@ -30,7 +30,7 @@ pipeline {
          }
          stage('expose my app') {
                steps {
-               sh 'ssh ubuntu@3.132.121.58 minikube service flask'
+               sh 'ssh ubuntu@3.83.45.0 minikube service flask'
                }
          }
          stage('Terraform Init'){
