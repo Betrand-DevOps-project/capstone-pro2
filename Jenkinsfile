@@ -1,9 +1,5 @@
 pipeline {
       agent any
-      environment{
-      DOCKERHUB_CREDENTIALS = credentials('DockerHub')
-    }
-
           stages {
                stage('Clone Repository') {
                steps {
@@ -12,35 +8,47 @@ pipeline {
           }
           stage('Build Image') {
                steps {
-               sh "docker build -t  bndah/mywelcomepage ."
-               }
-         }
-          stage('Login to DockerHub'){
-               steps{
-                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+               sh "docker build -t bndah/mywelcomepage ."
                }
          }
          stage('Push image') {
                steps {
-               sh 'docker push  bndah/mywelcomepage'
+               sh 'docker push bndah/mywelcomepage'
                }
          }
-         stage('copy deployment file') {
+         stage('Copy the files') {
                steps {
-               sh "scp -o StrictHostKeyChecking=no Deployment.yml ubuntu@3.83.45.0:/home/ubuntu"
-               sh "scp -o StrictHostKeyChecking=no Ansible.yml ubuntu@3.83.45.0:/home/ubuntu"
+               sh "scp -o StrictHostKeyChecking=no deploy.yaml ubuntu@3.83.45.0:/home/ubuntu"
+               sh "scp -o StrictHostKeyChecking=no ansi.yml ubuntu@3.83.45.0:/home/ubuntu"
                }
-         }
-         stage('Deploy k8') {
+         }       
+         stage('Create deployment and Service') {
                steps {
-                     
-               sh 'ansible-playbook ans.yml'
+               sh 'ansible -m ping all'
+               sh 'ansible-playbook ansi.yml'
                }
          }
+         stage('expose my app') {
+               steps {
+               sh 'ssh ubuntu@3.132.121.58 minikube service flask'
+               }
+         }
+         stage('Terraform Init'){
+             steps{
+                 sh 'terraform init'
+             }
+         }
+         stage ("terraform Action") {
+             steps {
+                echo "Terraform action is --> ${action}"
+                sh ('terraform ${action} --auto-approve') 
+             }
+         }
+
          stage('Testing') {
               steps {
                     echo 'Testing...'
                     }
          }
-}
+    }
 }
