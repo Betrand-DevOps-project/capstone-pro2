@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: flask
-        image: 19841022/flask
+        image: bndah/mywelcomepage
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5000
