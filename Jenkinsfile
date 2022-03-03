@@ -4,6 +4,7 @@ pipeline {
           dockerImage =''
           registry ='bndah/mywelcomepage'
           registryCredential ='bndah-dockerhub'
+         }
       
           stages {
                stage('Clone Repository') {
