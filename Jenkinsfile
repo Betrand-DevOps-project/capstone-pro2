@@ -24,7 +24,7 @@ pipeline {
                            dockerImage.push()
                   }
               }
-                     
+           }            
          }
          stage('Copy the files') {
                steps {
@@ -59,6 +59,7 @@ pipeline {
               steps {
                     echo 'Testing...'
                     }
-         }
+             }
+          }
     }
 }
