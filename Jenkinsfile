@@ -1,5 +1,5 @@
 pipeline {
-      agent anye
+      agent any
       enviroment {
           dockerImage =''
           registry ='bndah/mywelcomepage'
