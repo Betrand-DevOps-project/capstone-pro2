@@ -1,10 +1,8 @@
 pipeline {
       agent any
-      environment {
-          dockerImage =''
-          registry ='bndah/mywelcomepage'
-          registryCredential ='bndah-dockerhub'
-          }
+      environment{
+      DOCKERHUB_CREDENTIALS = credentials('bndah-dockerhub')
+    }
 
     stages {
 
@@ -18,15 +16,19 @@ pipeline {
                sh "docker build -t bndah/mywelcomepage ."
                }
            }
-         stage('Push image') {
-               steps {
-                     script {
-                           docker.withRegistry( '', registryCredential ) {
-                           dockerImage.push()
-                  }
-              }
-           }            
-         }
+          stage("Login to DockerHub"){
+          /* login in dockerhub  */
+            steps{
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }            
+        } 
+         stage("Push image DockerHub"){
+          /* push docker image to dockerhub */
+            steps{
+                sh 'docker push bndah/mywelcomepage'
+            }            
+        }
+        
          stage('Copy the files') {
                steps {
                sh "scp -o StrictHostKeyChecking=no deploy.yaml ubuntu@3.83.45.0:/home/ubuntu"
