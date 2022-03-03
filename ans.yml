@@ -1,7 +1,7 @@
 ---
 - name: create service for deployment
   hosts: server
-  #become: true
+  become: true
   #user: ubuntu
 
   tasks:
