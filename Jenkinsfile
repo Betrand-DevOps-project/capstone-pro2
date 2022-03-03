@@ -1,5 +1,10 @@
 pipeline {
-      agent any 
+      agent anye
+      enviroment {
+          dockerImage =''
+          registry ='bndah/mywelcomepage'
+          registryCredential ='bndah-dockerhub'
+      
           stages {
                stage('Clone Repository') {
                steps {
@@ -14,8 +19,12 @@ pipeline {
          
          stage('Push image') {
                steps {
-               sh 'docker push bndah/mywelcomepage'
-               }
+                     script {
+                           docker.withRegistry( '', registryCredential ) {
+                           dockerImage.push()
+                  }
+              }
+                     
          }
          stage('Copy the files') {
                steps {
