@@ -1,7 +1,7 @@
 pipeline {
       agent any
       enviroment {
-          dockerImage ="
+          dockerImage =""
           registry ='bndah/mywelcomepage'
           registryCredential ='bndah-dockerhub'
          }
