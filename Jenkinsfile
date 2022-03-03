@@ -1,12 +1,11 @@
 pipeline {
-      agent any
       enviroment {
-          dockerImage =""
+          dockerImage =''
           registry ='bndah/mywelcomepage'
           registryCredential ='bndah-dockerhub'
              }
          }
-      
+       agent any      
           stages {
                stage('Clone Repository') {
                steps {
