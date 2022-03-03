@@ -1,22 +1,23 @@
 pipeline {
       agent any
-      enviroment {
+      environment {
           dockerImage =''
           registry ='bndah/mywelcomepage'
           registryCredential ='bndah-dockerhub'
           }
-          stages {
-               stage('Clone Repository') {
+
+    stages {
+
+        stage('Clone Repository') {
                steps {
                checkout scm
                }
-          }
+           }    
           stage('Build Image') {
                steps {
                sh "docker build -t bndah/mywelcomepage ."
                }
-         }
-         
+           }
          stage('Push image') {
                steps {
                      script {
@@ -59,6 +60,8 @@ pipeline {
               steps {
                     echo 'Testing...'
                     }
-             }
-          }
+             }     
+          
+}
 
+}
