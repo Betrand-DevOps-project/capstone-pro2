@@ -1,6 +1,6 @@
 provider "aws" {
-   access_key = "<AKIAXMFDD7ERYV4JYE7F>"
-   secret_key = "<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>"
+   access_key = "AKIAXMFDD7ERYV4JYE7F"
+   secret_key = "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"
    region     = "us-east-1"
 }
 
@@ -59,8 +59,8 @@ resource "aws_cloudwatch_dashboard" "starter-dashboard {
                   "NetworkIn",
                   "InstanceId",
                   "${var.ec2-instance}"
-               [
-            [,
+               ]
+            ],
             "period":300,
             "stat":"Average",
             "region":"us-east-1",
