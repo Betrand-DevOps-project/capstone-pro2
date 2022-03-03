@@ -5,11 +5,10 @@ provider "aws" {
 }
 
 variable "ec2-instance" {
-  type    = "string"
   default = "i-0f9fe956a8a1d5529"
 }
 
-resource "aws_cloudwatch_dashboard" "starter-dashboard {
+resource "aws_cloudwatch_dashboard" "starter-dashboard" {
   dashboard_name = "dashboard-${var.ec2-instance}"
   
   dashboard_body = <<EOF
@@ -80,6 +79,6 @@ resource "aws_cloudwatch_metric_alarm" "ec2-cpu-88" {
   period                    = "120"
   statistic                 = "Average"
   threshold                 = "80"
-  alarm_description         = "This metric monitors when ec2 cpu utilization reaches 80%
+  alarm_description         = "This metric monitors when ec2 cpu utilization reaches 80"
   insufficient_data_action  = []
 }
