@@ -3,7 +3,7 @@ pipeline {
       environment {
           dockerImage =''
           registry ='bndah/mywelcomepage'
-          registryCredential ='bndah-dockerhub'
+          registryCredential ='bndah'
           }
 
     stages {
