@@ -80,5 +80,5 @@ resource "aws_cloudwatch_metric_alarm" "ec2-cpu-88" {
   statistic                 = "Average"
   threshold                 = "80"
   alarm_description         = "This metric monitors when ec2 cpu utilization reaches 80"
-  insufficient_data_action  = []
+  insufficient_data_actions  = []
 }
