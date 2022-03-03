@@ -1,8 +1,5 @@
 pipeline {
       agent any
-      environment {
-	       DOCKERHUB_CREDENTIALS=credentials('dockerhub')
-	}
           stages {
                stage('Clone Repository') {
                steps {
@@ -16,10 +13,10 @@ pipeline {
          }
          stage('Login') {
 
-		  steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-		  }
-	   }
+		steps {
+			sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+		}
+	 }
          stage('Push image') {
                steps {
                sh 'docker push bndah/mywelcomepage'
@@ -34,7 +31,7 @@ pipeline {
          stage('Create deployment and Service') {
                steps {
                sh 'ansible -m ping all'
-               sh 'ansible-playbook ansi.yml'
+               sh 'ansible-playbook ans.yml'
                }
          }
          stage('expose my app') {
