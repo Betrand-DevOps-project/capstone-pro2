@@ -25,7 +25,7 @@ pipeline {
          stage('Copy the files') {
                steps {
                sh "scp -o StrictHostKeyChecking=no deploy.yaml ubuntu@3.83.45.0:/home/ubuntu"
-               sh "scp -o StrictHostKeyChecking=no ansi.yml ubuntu@3.83.45.0:/home/ubuntu"
+               sh "scp -o StrictHostKeyChecking=no ans.yml ubuntu@3.83.45.0:/home/ubuntu"
                }
          }       
          stage('Create deployment and Service') {
